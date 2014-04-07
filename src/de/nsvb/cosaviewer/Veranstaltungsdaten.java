@@ -23,6 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +47,9 @@ public class Veranstaltungsdaten {
 
             name = readAttribute(vFile, 0x120, 90);
             kurzName = readAttribute(vFile, 0x17a, 40);
+            veranstalter = readAttribute(vFile, 0x1a2, 50);
+            ausrichter = readAttribute(vFile, 0x1d4, 50);
+            ort = readAttribute(vFile, 0x200, 50);
             
             for (Field field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
@@ -70,6 +74,6 @@ public class Veranstaltungsdaten {
         byte[] readBuffer = new byte[length];
         file.seek(pos);
         file.read(readBuffer, 0, length);
-        return new String(readBuffer).trim();
+        return new String(readBuffer, Charset.forName("ISO-8859-1")).trim();
     }
 }
