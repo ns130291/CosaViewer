@@ -16,10 +16,8 @@
  */
 package de.nsvb.cosaviewer;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
@@ -37,9 +35,35 @@ public class Veranstaltungsdaten {
     private String kurzName;
     private String veranstalter;
     private String ausrichter;
+    private String veranstaltungsNummer;
     private String ort;
     private String wettkampfstätte;
-    private String datum;
+    private String datum1;
+    private String datum2;
+    private String datum3;
+    private String datum4;
+    private String veranstaltungsSaison;
+    private String stellplatzzeit;
+    private String gebührZusendungErgebnisliste;
+    private String aufschlagNachmeldegebühren;
+    private boolean aufschlagProzent;
+    private boolean beginnNachmeldung;
+
+    private String orgGebührErwEinzel;
+    private String orgGebührErwStaffel;
+    private String orgGebührErwMehr;
+    private String orgGebührErwLauf;
+    private String orgGebührErwDMM;
+    private String orgGebührU20U18Einzel;
+    private String orgGebührU20U18Staffel;
+    private String orgGebührU20U18Mehr;
+    private String orgGebührU20U18Lauf;
+    private String orgGebührU20U18DMM;
+    private String orgGebührU16U8Einzel;
+    private String orgGebührU16U8Staffel;
+    private String orgGebührU16U8Mehr;
+    private String orgGebührU16U8Lauf;
+    private String orgGebührU16U8DMM;
 
     public void read(File file) {
         try {
@@ -50,7 +74,40 @@ public class Veranstaltungsdaten {
             veranstalter = readAttribute(vFile, 0x1a2, 50);
             ausrichter = readAttribute(vFile, 0x1d4, 50);
             ort = readAttribute(vFile, 0x200, 50);
+            wettkampfstätte = readAttribute(vFile, 0x249, 50);
+            veranstaltungsNummer = readAttribute(vFile, 0x238, 13);
             
+            //TODO: aktiverte datumseinträge 0x2c1+4
+            datum1 = readAttribute(vFile, 0x27b, 10);
+            datum2 = readAttribute(vFile, 0x285, 10);
+            datum3 = readAttribute(vFile, 0x28f, 10);
+            datum4 = readAttribute(vFile, 0x299, 10);
+            
+            veranstaltungsSaison = readAttribute(vFile, 0xce, 4);
+            stellplatzzeit = readAttribute(vFile, 0x9, 3);
+            gebührZusendungErgebnisliste = readAttribute(vFile, 0xc, 5);
+            aufschlagNachmeldegebühren = readAttribute(vFile, 0x11, 6);
+            aufschlagProzent = readAttribute(vFile, 0x17, 1).equals("1");
+            beginnNachmeldung = readAttribute(vFile, 0x18, 1).equals("1");
+            
+            orgGebührErwEinzel = readAttribute(vFile, 0x19, 5);
+            orgGebührErwStaffel = readAttribute(vFile, 0x28, 5);
+            orgGebührErwMehr = readAttribute(vFile, 0x37, 5);
+            orgGebührErwLauf = readAttribute(vFile, 0x46, 5);
+            orgGebührErwDMM = readAttribute(vFile, 0x55, 6);
+            
+            orgGebührU20U18Einzel = readAttribute(vFile, 0x1e, 5);
+            orgGebührU20U18Staffel = readAttribute(vFile, 0x2d, 5);
+            orgGebührU20U18Mehr = readAttribute(vFile, 0x3c, 5);
+            orgGebührU20U18Lauf = readAttribute(vFile, 0x4b, 5);
+            orgGebührU20U18DMM = readAttribute(vFile, 0x5b, 6);
+            
+            orgGebührU16U8Einzel = readAttribute(vFile, 0x23, 5);
+            orgGebührU16U8Staffel = readAttribute(vFile, 0x32, 5);
+            orgGebührU16U8Mehr = readAttribute(vFile, 0x41, 5);
+            orgGebührU16U8Lauf = readAttribute(vFile, 0x50, 5);
+            orgGebührU16U8DMM = readAttribute(vFile, 0x61, 6);
+
             for (Field field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 String name = field.getName();
