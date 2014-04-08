@@ -48,6 +48,7 @@ public class Veranstaltungsdaten {
     private String aufschlagNachmeldegebühren;
     private boolean aufschlagProzent;
     private boolean beginnNachmeldung;
+    private Typ veranstaltungsTyp;
 
     private String orgGebührErwEinzel;
     private String orgGebührErwStaffel;
@@ -64,6 +65,11 @@ public class Veranstaltungsdaten {
     private String orgGebührU16U8Mehr;
     private String orgGebührU16U8Lauf;
     private String orgGebührU16U8DMM;
+    private String orgGebühr3_4KampfU16U8;
+    private String orgGebühr4_9KampfMJU16;
+    private String orgGebühr4_7KampfWJU16;
+    private String orgGebühr5_10KampfMJU20U18;
+    private String orgGebühr4_7KampfWJU20U18;
 
     public void read(File file) {
         try {
@@ -107,7 +113,16 @@ public class Veranstaltungsdaten {
             orgGebührU16U8Mehr = readAttribute(vFile, 0x41, 5);
             orgGebührU16U8Lauf = readAttribute(vFile, 0x50, 5);
             orgGebührU16U8DMM = readAttribute(vFile, 0x61, 6);
-
+            
+            orgGebühr3_4KampfU16U8 = readAttribute(vFile, 0x1606, 5);
+            orgGebühr4_9KampfMJU16 = readAttribute(vFile, 0x160b, 5);
+            orgGebühr4_7KampfWJU16 = readAttribute(vFile, 0x1610, 5);
+            orgGebühr5_10KampfMJU20U18 = readAttribute(vFile, 0x1615, 5);
+            orgGebühr4_7KampfWJU20U18 = readAttribute(vFile, 0x161a, 5);
+            
+            veranstaltungsTyp = Typ.values()[readByte(vFile, 0x2c8)];
+            
+            
             for (Field field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 String name = field.getName();
@@ -132,5 +147,35 @@ public class Veranstaltungsdaten {
         file.seek(pos);
         file.read(readBuffer, 0, length);
         return new String(readBuffer, Charset.forName("ISO-8859-1")).trim();
+    }
+    
+    private byte readByte(RandomAccessFile file, long pos) throws IOException {
+        byte[] readBuffer = new byte[1];
+        file.seek(pos);
+        file.read(readBuffer, 0, 1);
+        return readBuffer[0];
+    }
+    
+    public enum Typ{
+        VEREINSOFFEN ("Vereinsoffen"),
+        KREISOFFEN ("Kreisoffen"),
+        BEZIRKSOFFEN ("Bezirksoffen"),
+        LANDESOFFEN ("Landesoffen"),
+        NATIONAL ("National"),
+        INTERN_SPORTFEST ("Intern. Sportfest"),
+        INTERN_EINLADUNGSSPORTFEST ("Intern. Einladungssportfest"),
+        EAA ("EAA"),
+        IAAF ("IAAF");
+        
+        private final String name;
+        
+        Typ(String name){
+            this.name = name;
+        } 
+        
+        @Override
+        public String toString(){
+            return name;
+        }
     }
 }
