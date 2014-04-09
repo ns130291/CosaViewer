@@ -38,13 +38,20 @@ public class CosaViewer {
                 case "vandat.c01":
                     readVeranstaltungsdaten(file);
                     break;
+                case "Wettbew.c01":
+                    readWettbewerbe(file);
+                    break;
             }
         }
     }
 
     private static void readVeranstaltungsdaten(File file) {
         Veranstaltungsdaten v = new Veranstaltungsdaten();
-        v.read(file);
-        
+        v.read(file);       
+    }
+    
+    private static void readWettbewerbe(File file) {
+        Wettbewerbe w = new Wettbewerbe();
+        w.read(file);
     }
 }

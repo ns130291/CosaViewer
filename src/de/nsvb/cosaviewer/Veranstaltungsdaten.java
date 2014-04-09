@@ -225,7 +225,7 @@ public class Veranstaltungsdaten {
 
         private final String name;
 
-        Typ(String name) {
+        private Typ(String name) {
             this.name = name;
         }
 

@@ -14,13 +14,88 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.nsvb.cosaviewer;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ns130291
  */
 public class Wettbewerbe {
-    
+
+    private ArrayList<Wettbewerb> wettbewerbe = new ArrayList<Wettbewerb>() {
+
+        @Override
+        public String toString() {
+            Iterator<Wettbewerb> it = iterator();
+            if (!it.hasNext()) {
+                return "[]";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append('[').append("\n");
+            for (;;) {
+                Wettbewerb e = it.next();
+                sb.append("\t" + e);
+                if (!it.hasNext()) {
+                    return sb.append("\n").append(']').toString();
+                }
+                sb.append(',').append('\n');
+            }
+        }
+
+    };
+
+    //alle 389 Byte ein Eintrag
+    public void read(File file) {
+        try {
+            RandomAccessFile vFile = new RandomAccessFile(file, "r");
+
+            int next = 389;
+            int pos = 0;
+
+            //int i = 0;
+            while (vFile.length() > pos) {
+                if (!FileReader.readAttribute(vFile, pos, 3).equals("")) {
+                    Wettbewerb w = new Wettbewerb();
+                    w.setNummer(FileReader.readIntString(vFile, pos, 3));
+                    w.setName(FileReader.readAttribute(vFile, pos + 0x3, 28));//genaue Länge noch nicht bekannt
+                    w.setWindmessung(FileReader.readAttribute(vFile, pos + 0x2e, 1).equals("1"));
+
+                    wettbewerbe.add(w);
+                }
+                //i++;
+                pos += next;
+            }
+
+            //System.out.println("i = " + i);
+            for (Field field : getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                String name = field.getName();
+                Object value = field.get(this);
+                System.out.printf("%s = %s%n", name, value);
+            }
+
+            /*for(boolean t:gesperrtHürdenRund){
+             System.out.print((t)?"1":"0");
+             }*/
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
