@@ -54,29 +54,39 @@ public class Wettbewerbe {
         }
 
     };
-
-    //alle 389 Byte ein Eintrag
+    
     public void read(File file) {
         try {
-            RandomAccessFile vFile = new RandomAccessFile(file, "r");
+            read(new RandomFileReader(new RandomAccessFile(file, "r")));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void read(byte[] file){
+        read(new ByteArrayReader(file));
+    }
 
-            int next = 389;
+    //alle 389 Byte ein Eintrag
+    private void read(Reader reader) {
+        try {
+            final int next = 389;
             int pos = 0;
 
             //int i = 0;
-            while (vFile.length() > pos) {
-                if (!FileReader.readAttribute(vFile, pos, 3).equals("")) {
+            while (reader.length() > pos) {
+                if (!reader.readAttribute(pos, 3).equals("")) {
                     Wettbewerb w = new Wettbewerb();
-                    w.setNummer(FileReader.readIntString(vFile, pos, 3));
-                    w.setName(FileReader.readAttribute(vFile, pos + 0x3, 28));//genaue Länge noch nicht bekannt
-                    w.setWindmessung(FileReader.readAttribute(vFile, pos + 0x2e, 1).equals("1"));
-                    w.setOrgGebühr(FileReader.readAttribute(vFile, pos + 0x33, 6));
-                    w.setUrkundenTyp(FileReader.readIntString(vFile, pos + 0x31, 1));
+                    w.setNummer(reader.readIntString(pos, 3));
+                    w.setName(reader.readAttribute(pos + 0x3, 28));//genaue Länge noch nicht bekannt
+                    w.setWindmessung(reader.readAttribute(pos + 0x2e, 1).equals("1"));
+                    w.setOrgGebühr(reader.readAttribute(pos + 0x33, 6));
+                    w.setUrkundenTyp(reader.readIntString(pos + 0x31, 1));
                     //Siegertexte
-                    w.setAnzahlVersuche(FileReader.readIntString(vFile, pos + 0x2d, 1));
-                    w.setTeilnehmerProStaffelMannschaft(FileReader.readIntString(vFile, pos + 0x2c, 1));
-                    w.setStellplatzzeit(FileReader.readIntString(vFile, pos + 0x48, 3));
-                    w.setPokalwertungsGruppe(FileReader.readIntString(vFile, pos + 0x2f, 2));
+                    w.setAnzahlVersuche(reader.readIntString(pos + 0x2d, 1));
+                    w.setTeilnehmerProStaffelMannschaft(reader.readIntString(pos + 0x2c, 1));
+                    w.setStellplatzzeit(reader.readIntString(pos + 0x48, 3));
+                    w.setPokalwertungsGruppe(reader.readIntString(pos + 0x2f, 2));
 
                     wettbewerbe.add(w);
                 }

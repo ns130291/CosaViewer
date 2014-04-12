@@ -16,14 +16,38 @@
  */
 package de.nsvb.cosaviewer;
 
-import com.sun.jndi.toolkit.url.Uri;
+import com.sun.nio.zipfs.ZipFileSystem;
+import com.sun.nio.zipfs.ZipFileSystemProvider;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  *
  * @author ns130291
  */
 public class CosaViewer {
+
+    private static FileSystemProvider getZipFSProvider() {
+        for (FileSystemProvider provider : FileSystemProvider.installedProviders()) {
+            if ("jar".equals(provider.getScheme())) {
+                return provider;
+            }
+        }
+        return null;
+    }
 
     /**
      * @param args the command line arguments
@@ -33,25 +57,73 @@ public class CosaViewer {
         if (args.length > 0) {
 
             File file = new File(args[0]);
+            String name = file.getName();
+            if (name.substring(name.lastIndexOf('.') + 1).toLowerCase().equals("zip")) {
+                System.out.println("Zip-Inhalt");
 
-            switch (file.getName()) {
-                case "vandat.c01":
-                    readVeranstaltungsdaten(file);
-                    break;
-                case "Wettbew.c01":
-                    readWettbewerbe(file);
-                    break;
+                try {
+                    ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
+                    ZipEntry entry;
+                    while ((entry = zip.getNextEntry()) != null) {
+                        if (entry.getSize() > -1 && entry.getSize() <= Integer.MAX_VALUE) {
+                            byte data[] = new byte[(int) entry.getSize()];
+                            String filename = entry.getName();
+                            System.out.println("* " + filename);
+
+                            readFileFromZip(filename, zip, data, (int) entry.getSize());
+                        }else{
+                            System.out.println("Fehler beim lesen der Zip-Datei");
+                        }
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CosaViewer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(CosaViewer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                switch (name) {
+                    case "vandat.c01":
+                        readVeranstaltungsdaten(file);
+                        break;
+                    case "Wettbew.c01":
+                        readWettbewerbe(file);
+                        break;
+                }
             }
         }
     }
 
     private static void readVeranstaltungsdaten(File file) {
         Veranstaltungsdaten v = new Veranstaltungsdaten();
-        v.read(file);       
+        v.read(file);
     }
-    
+
     private static void readWettbewerbe(File file) {
         Wettbewerbe w = new Wettbewerbe();
         w.read(file);
+    }
+
+    private static void readVeranstaltungsdaten(ZipInputStream zip, byte[] data, int length) throws IOException {
+        zip.read(data, 0, length);
+        Veranstaltungsdaten v = new Veranstaltungsdaten();
+        v.read(data);
+    }
+
+    private static void readWettbewerbe(ZipInputStream zip, byte[] data, int length) throws IOException {
+        zip.read(data, 0, length);
+        Wettbewerbe w = new Wettbewerbe();
+        w.read(data);
+    }
+
+    private static void readFileFromZip(String filename, ZipInputStream zip, byte[] data, int length) throws IOException {
+        switch (filename) {
+            case "vandat.c01":
+                readVeranstaltungsdaten(zip, data, length);
+                break;
+            case "Wettbew.c01":
+                readWettbewerbe(zip, data, length);
+                break;
+        }
+//
     }
 }

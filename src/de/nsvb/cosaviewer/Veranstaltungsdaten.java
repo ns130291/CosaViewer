@@ -67,6 +67,7 @@ public class Veranstaltungsdaten {
     private boolean[] gesperrtFlachRund;
     private boolean[] gesperrtHürdenGerade;
     private boolean[] gesperrtHürdenRund;
+    private boolean[] tage;
 
     private Typ veranstaltungsTyp;
 
@@ -105,88 +106,100 @@ public class Veranstaltungsdaten {
     private String orgGebühr5_10KampfMJU20U18;
     private String orgGebühr4_7KampfWJU20U18;
 
-    public void read(File file) {
+    public void read(File file) {            
         try {
-            RandomAccessFile vFile = new RandomAccessFile(file, "r");
+            read(new RandomFileReader(new RandomAccessFile(file, "r")));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void read(byte[] file){
+        read(new ByteArrayReader(file));
+    }
+    
+    private void read(Reader reader) {
+        try {
 
-            name = FileReader.readAttribute(vFile, 0x120, 90);
-            kurzName = FileReader.readAttribute(vFile, 0x17a, 40);
-            veranstalter = FileReader.readAttribute(vFile, 0x1a2, 50);
-            ausrichter = FileReader.readAttribute(vFile, 0x1d4, 50);
-            ort = FileReader.readAttribute(vFile, 0x200, 50);
-            wettkampfstätte = FileReader.readAttribute(vFile, 0x249, 50);
-            veranstaltungsNummer = FileReader.readAttribute(vFile, 0x238, 13);
+            name = reader.readAttribute(0x120, 90);
+            kurzName = reader.readAttribute(0x17a, 40);
+            veranstalter = reader.readAttribute(0x1a2, 50);
+            ausrichter = reader.readAttribute(0x1d4, 50);
+            ort = reader.readAttribute(0x200, 50);
+            wettkampfstätte = reader.readAttribute(0x249, 50);
+            veranstaltungsNummer = reader.readAttribute(0x238, 13);
 
             //TODO: aktiverte datumseinträge 0x2c1+4
-            datum1 = FileReader.readAttribute(vFile, 0x27b, 10);
-            datum2 = FileReader.readAttribute(vFile, 0x285, 10);
-            datum3 = FileReader.readAttribute(vFile, 0x28f, 10);
-            datum4 = FileReader.readAttribute(vFile, 0x299, 10);
+            tage = reader.readBooleans(0x2c1, 4);
+            datum1 = reader.readAttribute(0x27b, 10);
+            datum2 = reader.readAttribute(0x285, 10);
+            datum3 = reader.readAttribute(0x28f, 10);
+            datum4 = reader.readAttribute(0x299, 10);
 
-            veranstaltungsSaison = FileReader.readAttribute(vFile, 0xce, 4);
-            stellplatzzeit = FileReader.readAttribute(vFile, 0x9, 3);
-            gebührZusendungErgebnisliste = FileReader.readAttribute(vFile, 0xc, 5);
-            aufschlagNachmeldegebühren = FileReader.readAttribute(vFile, 0x11, 6);
-            aufschlagProzent = FileReader.readAttribute(vFile, 0x17, 1).equals("1");
-            beginnNachmeldung = FileReader.readAttribute(vFile, 0x18, 1).equals("1");
+            veranstaltungsSaison = reader.readAttribute(0xce, 4);
+            stellplatzzeit = reader.readAttribute(0x9, 3);
+            gebührZusendungErgebnisliste = reader.readAttribute(0xc, 5);
+            aufschlagNachmeldegebühren = reader.readAttribute(0x11, 6);
+            aufschlagProzent = reader.readAttribute(0x17, 1).equals("1");
+            beginnNachmeldung = reader.readAttribute(0x18, 1).equals("1");
 
-            orgGebührErwEinzel = FileReader.readAttribute(vFile, 0x19, 5);
-            orgGebührErwStaffel = FileReader.readAttribute(vFile, 0x28, 5);
-            orgGebührErwMehr = FileReader.readAttribute(vFile, 0x37, 5);
-            orgGebührErwLauf = FileReader.readAttribute(vFile, 0x46, 5);
-            orgGebührErwDMM = FileReader.readAttribute(vFile, 0x55, 6);
+            orgGebührErwEinzel = reader.readAttribute(0x19, 5);
+            orgGebührErwStaffel = reader.readAttribute(0x28, 5);
+            orgGebührErwMehr = reader.readAttribute(0x37, 5);
+            orgGebührErwLauf = reader.readAttribute(0x46, 5);
+            orgGebührErwDMM = reader.readAttribute(0x55, 6);
 
-            orgGebührU20U18Einzel = FileReader.readAttribute(vFile, 0x1e, 5);
-            orgGebührU20U18Staffel = FileReader.readAttribute(vFile, 0x2d, 5);
-            orgGebührU20U18Mehr = FileReader.readAttribute(vFile, 0x3c, 5);
-            orgGebührU20U18Lauf = FileReader.readAttribute(vFile, 0x4b, 5);
-            orgGebührU20U18DMM = FileReader.readAttribute(vFile, 0x5b, 6);
+            orgGebührU20U18Einzel = reader.readAttribute(0x1e, 5);
+            orgGebührU20U18Staffel = reader.readAttribute(0x2d, 5);
+            orgGebührU20U18Mehr = reader.readAttribute(0x3c, 5);
+            orgGebührU20U18Lauf = reader.readAttribute(0x4b, 5);
+            orgGebührU20U18DMM = reader.readAttribute(0x5b, 6);
 
-            orgGebührU16U8Einzel = FileReader.readAttribute(vFile, 0x23, 5);
-            orgGebührU16U8Staffel = FileReader.readAttribute(vFile, 0x32, 5);
-            orgGebührU16U8Mehr = FileReader.readAttribute(vFile, 0x41, 5);
-            orgGebührU16U8Lauf = FileReader.readAttribute(vFile, 0x50, 5);
-            orgGebührU16U8DMM = FileReader.readAttribute(vFile, 0x61, 6);
+            orgGebührU16U8Einzel = reader.readAttribute(0x23, 5);
+            orgGebührU16U8Staffel = reader.readAttribute(0x32, 5);
+            orgGebührU16U8Mehr = reader.readAttribute(0x41, 5);
+            orgGebührU16U8Lauf = reader.readAttribute(0x50, 5);
+            orgGebührU16U8DMM = reader.readAttribute(0x61, 6);
 
-            orgGebühr3_4KampfU16U8 = FileReader.readAttribute(vFile, 0x1606, 5);
-            orgGebühr4_9KampfMJU16 = FileReader.readAttribute(vFile, 0x160b, 5);
-            orgGebühr4_7KampfWJU16 = FileReader.readAttribute(vFile, 0x1610, 5);
-            orgGebühr5_10KampfMJU20U18 = FileReader.readAttribute(vFile, 0x1615, 5);
-            orgGebühr4_7KampfWJU20U18 = FileReader.readAttribute(vFile, 0x161a, 5);
+            orgGebühr3_4KampfU16U8 = reader.readAttribute(0x1606, 5);
+            orgGebühr4_9KampfMJU16 = reader.readAttribute(0x160b, 5);
+            orgGebühr4_7KampfWJU16 = reader.readAttribute(0x1610, 5);
+            orgGebühr5_10KampfMJU20U18 = reader.readAttribute(0x1615, 5);
+            orgGebühr4_7KampfWJU20U18 = reader.readAttribute(0x161a, 5);
 
-            veranstaltungsTyp = Typ.values()[FileReader.readByte(vFile, 0x2c8)];
+            veranstaltungsTyp = Typ.values()[reader.readByte(0x2c8)];
 
-            anzahlBahnenFlachGerade = FileReader.readIntString(vFile, 0x6a, 2);
-            anzahlBahnenFlachRund = FileReader.readIntString(vFile, 0x6c, 2);
-            anzahlBahnenHürdenGerade = FileReader.readIntString(vFile, 0x6e, 2);
-            anzahlBahnenHürdenRund = FileReader.readIntString(vFile, 0x70, 2);
-            anzahlUrkundenJeWettbewerb = FileReader.readIntString(vFile, 0x6, 3);
-            anzahlAusdruckeJeWettkampflisteLauf = FileReader.readIntString(vFile, 0x72, 2);
-            anzahlAusdruckeJeWettkampflisteStaffel = FileReader.readIntString(vFile, 0x74, 2);
-            anzahlAusdruckeJeWettkampflisteHochStab = FileReader.readIntString(vFile, 0x76, 2);
-            anzahlAusdruckeJeWettkampflisteTechnik = FileReader.readIntString(vFile, 0x78, 2);
-            anzahlFreieStartpositionenLauf = FileReader.readIntString(vFile, 0x7a, 1);
-            anzahlFreieStartpositionenTechnik = FileReader.readIntString(vFile, 0x7c, 1);
-            anzahlAusdruckeErgebnisprotokollErfassung = FileReader.readIntString(vFile, 0x82, 2);
+            anzahlBahnenFlachGerade = reader.readIntString(0x6a, 2);
+            anzahlBahnenFlachRund = reader.readIntString(0x6c, 2);
+            anzahlBahnenHürdenGerade = reader.readIntString(0x6e, 2);
+            anzahlBahnenHürdenRund = reader.readIntString(0x70, 2);
+            anzahlUrkundenJeWettbewerb = reader.readIntString(0x6, 3);
+            anzahlAusdruckeJeWettkampflisteLauf = reader.readIntString(0x72, 2);
+            anzahlAusdruckeJeWettkampflisteStaffel = reader.readIntString(0x74, 2);
+            anzahlAusdruckeJeWettkampflisteHochStab = reader.readIntString(0x76, 2);
+            anzahlAusdruckeJeWettkampflisteTechnik = reader.readIntString(0x78, 2);
+            anzahlFreieStartpositionenLauf = reader.readIntString(0x7a, 1);
+            anzahlFreieStartpositionenTechnik = reader.readIntString(0x7c, 1);
+            anzahlAusdruckeErgebnisprotokollErfassung = reader.readIntString(0x82, 2);
 
-            zeitnahmeElektronisch = FileReader.readAttribute(vFile, 0x5, 1).equals("1");
-            altersklassenPrüfung = FileReader.readAttribute(vFile, 0x89, 1).equals("1");
-            pokalwertung = FileReader.readAttribute(vFile, 0x88, 1).equals("1");
-            auswertungNachWertungsgruppen = FileReader.readAttribute(vFile, 0x8d, 1).equals("1");
-            hallenveranstaltung = FileReader.readAttribute(vFile, 0x90, 1).equals("1");
-            automQualiKennzSetzen = FileReader.readAttribute(vFile, 0x8c, 1).equals("1");
-            andruckKennzBSGbeiBewertNachDLVMehrkampfabz = FileReader.readAttribute(vFile, 0x8e, 1).equals("1");
-            bewertSenBereichAltersklassenfaktorenMehrkampf = FileReader.readAttribute(vFile, 0x8f, 1).equals("1");
-            mitWettbewerbenDMMDAMM = FileReader.readAttribute(vFile, 0xc6, 1).equals("1");
-            winderfassungKleinerU16 = FileReader.readAttribute(vFile, 0x92, 1).equals("1");
-            altersklassenKleinerU10 = FileReader.readAttribute(vFile, 0x93, 1).equals("1");
-            gemischteWettbewerbe = FileReader.readAttribute(vFile, 0xc1, 1).equals("1");
-            //bahnenSperren = FileReader.readAttribute(vFile, ??????, 1).equals("1");
+            zeitnahmeElektronisch = reader.readAttribute(0x5, 1).equals("1");
+            altersklassenPrüfung = reader.readAttribute(0x89, 1).equals("1");
+            pokalwertung = reader.readAttribute(0x88, 1).equals("1");
+            auswertungNachWertungsgruppen = reader.readAttribute(0x8d, 1).equals("1");
+            hallenveranstaltung = reader.readAttribute(0x90, 1).equals("1");
+            automQualiKennzSetzen = reader.readAttribute(0x8c, 1).equals("1");
+            andruckKennzBSGbeiBewertNachDLVMehrkampfabz = reader.readAttribute(0x8e, 1).equals("1");
+            bewertSenBereichAltersklassenfaktorenMehrkampf = reader.readAttribute(0x8f, 1).equals("1");
+            mitWettbewerbenDMMDAMM = reader.readAttribute(0xc6, 1).equals("1");
+            winderfassungKleinerU16 = reader.readAttribute(0x92, 1).equals("1");
+            altersklassenKleinerU10 = reader.readAttribute(0x93, 1).equals("1");
+            gemischteWettbewerbe = reader.readAttribute(0xc1, 1).equals("1");
+            //bahnenSperren = Filereader.readAttribute(??????, 1).equals("1");
 
-            gesperrtFlachGerade = FileReader.readBooleans(vFile, 0x94, 10);
-            gesperrtFlachRund = FileReader.readBooleans(vFile, 0x9e, 10);
-            gesperrtHürdenGerade = FileReader.readBooleans(vFile, 0xa8, 10);
-            gesperrtHürdenRund = FileReader.readBooleans(vFile, 0xb2, 10);
+            gesperrtFlachGerade = reader.readBooleans(0x94, 10);
+            gesperrtFlachRund = reader.readBooleans(0x9e, 10);
+            gesperrtHürdenGerade = reader.readBooleans(0xa8, 10);
+            gesperrtHürdenRund = reader.readBooleans(0xb2, 10);
 
             for (Field field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
@@ -195,7 +208,7 @@ public class Veranstaltungsdaten {
                 System.out.printf("%s = %s%n", name, value);
             }
             
-            /*for(boolean t:gesperrtHürdenRund){
+            /*for(boolean t:tage){
                 System.out.print((t)?"1":"0");
             }*/
 
