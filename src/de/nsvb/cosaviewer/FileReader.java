@@ -54,6 +54,11 @@ public class FileReader {
     }
 
     public static int readIntString(RandomAccessFile file, long pos, int length) throws IOException {
-        return Integer.parseInt(readAttribute(file, pos, length));
+        String attribute = readAttribute(file, pos, length);
+        if (attribute.equals("")) {
+            return -1;
+        } else {
+            return Integer.parseInt(attribute);
+        }
     }
 }

@@ -34,14 +34,33 @@ public class Wettbewerb {
     private int teilnehmerProStaffelMannschaft;
     private boolean altersklassenWertung;
     private boolean keineBewertungMitAKFaktoren;
-    //private ?? pokalwertungsGruppe;
+    private int pokalwertungsGruppe;
     private int urkundenTyp;
     private int siegertextNr;
+    private int stellplatzzeit;
     private String orgGebühr;
     private Altersklasse altersklasse;
     private Disziplin disziplin;
 
     //evtl weitere Attribute wie Stellplatzvorlaufzeit, Stellplatzzeit, Vor-, Zwischen- & Endlauf
+    public int getPokalwertungsGruppe() {
+        return pokalwertungsGruppe;
+    }
+
+    public void setPokalwertungsGruppe(int pokalwertungsGruppe) {
+        this.pokalwertungsGruppe = pokalwertungsGruppe;
+    }
+    
+    
+    public int getStellplatzzeit() {
+        return stellplatzzeit;
+    }
+
+    public void setStellplatzzeit(int stellplatzzeit) {
+        this.stellplatzzeit = stellplatzzeit;
+    }
+    
+    
     public int getNummer() {
         return nummer;
     }

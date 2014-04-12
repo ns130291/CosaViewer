@@ -45,7 +45,7 @@ public class Wettbewerbe {
             sb.append('[').append("\n");
             for (;;) {
                 Wettbewerb e = it.next();
-                sb.append("\t" + e);
+                sb.append("\t").append(e);
                 if (!it.hasNext()) {
                     return sb.append("\n").append(']').toString();
                 }
@@ -70,6 +70,13 @@ public class Wettbewerbe {
                     w.setNummer(FileReader.readIntString(vFile, pos, 3));
                     w.setName(FileReader.readAttribute(vFile, pos + 0x3, 28));//genaue Länge noch nicht bekannt
                     w.setWindmessung(FileReader.readAttribute(vFile, pos + 0x2e, 1).equals("1"));
+                    w.setOrgGebühr(FileReader.readAttribute(vFile, pos + 0x33, 6));
+                    w.setUrkundenTyp(FileReader.readIntString(vFile, pos + 0x31, 1));
+                    //Siegertexte
+                    w.setAnzahlVersuche(FileReader.readIntString(vFile, pos + 0x2d, 1));
+                    w.setTeilnehmerProStaffelMannschaft(FileReader.readIntString(vFile, pos + 0x2c, 1));
+                    w.setStellplatzzeit(FileReader.readIntString(vFile, pos + 0x48, 3));
+                    w.setPokalwertungsGruppe(FileReader.readIntString(vFile, pos + 0x2f, 2));
 
                     wettbewerbe.add(w);
                 }
@@ -85,9 +92,6 @@ public class Wettbewerbe {
                 System.out.printf("%s = %s%n", name, value);
             }
 
-            /*for(boolean t:gesperrtHürdenRund){
-             System.out.print((t)?"1":"0");
-             }*/
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Veranstaltungsdaten.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
