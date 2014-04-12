@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.nsvb.cosaviewer.ui.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.nsvb.cosaviewer.ui.MainWindowController">
+  <children>
+    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <MenuBar prefWidth="800.0">
+          <menus>
+            <Menu mnemonicParsing="true" text="_Datei">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Close" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Hilfe">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Über" />
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+        <SplitPane dividerPositions="0.5175438596491229" focusTraversable="true" prefHeight="576.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+          <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+              <children>
+                <ListView fx:id="section" prefHeight="600.0" prefWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <SectionItem id="1" name="Veranstaltung" />
+                      <SectionItem id="2" name="Vorgaben" />
+                      <SectionItem id="3" name="Wettbewerbe" />
+                      <SectionItem id="4" name="Teilnehmer" />
+                      <SectionItem id="5" name="Vereine" />
+                      <SectionItem id="6" name="Druckoptionen" />
+                    </FXCollections>
+                  </items>
+                </ListView>
+              </children>
+            </AnchorPane>
+            <AnchorPane fx:id="content" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          </items>
+        </SplitPane>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
