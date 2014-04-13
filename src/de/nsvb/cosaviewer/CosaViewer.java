@@ -16,19 +16,10 @@
  */
 package de.nsvb.cosaviewer;
 
-import com.sun.nio.zipfs.ZipFileSystem;
-import com.sun.nio.zipfs.ZipFileSystemProvider;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.spi.FileSystemProvider;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -39,15 +30,6 @@ import java.util.zip.ZipInputStream;
  * @author ns130291
  */
 public class CosaViewer {
-
-    private static FileSystemProvider getZipFSProvider() {
-        for (FileSystemProvider provider : FileSystemProvider.installedProviders()) {
-            if ("jar".equals(provider.getScheme())) {
-                return provider;
-            }
-        }
-        return null;
-    }
 
     /**
      * @param args the command line arguments
@@ -72,7 +54,7 @@ public class CosaViewer {
 
                             readFileFromZip(filename, zip, data, (int) entry.getSize());
                         }else{
-                            System.out.println("Fehler beim lesen der Zip-Datei");
+                            System.out.println("Fehler beim Lesen der Zip-Datei");
                         }
                     }
                 } catch (FileNotFoundException ex) {
@@ -124,6 +106,5 @@ public class CosaViewer {
                 readWettbewerbe(zip, data, length);
                 break;
         }
-//
     }
 }

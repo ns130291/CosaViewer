@@ -1,0 +1,9 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+#keineVeranstaltung{
+    -fx-text-fill: lightgray;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+}

@@ -14,13 +14,26 @@
           <menus>
             <Menu mnemonicParsing="true" text="_Datei">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Öffnen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Datei öffnen" >
+                      <accelerator>
+                          <javafx.scene.input.KeyCodeCombination shortcut="DOWN" code="O" control="ANY" alt="UP" meta="ANY" shift="UP" />  
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpenFolder" text="Ordner öffnen" >                      
+                      <accelerator>
+                          <javafx.scene.input.KeyCodeCombination shortcut="DOWN" code="O" control="ANY" alt="UP" meta="ANY" shift="DOWN" />  
+                      </accelerator>
+                  </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Beenden" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Hilfe">
+            <Menu mnemonicParsing="false" onAction="#handleAbout"  text="Hilfe">
               <items>
-                <MenuItem mnemonicParsing="false" text="Über" />
+                  <MenuItem mnemonicParsing="false" text="Über" >
+                      <accelerator>
+                          <javafx.scene.input.KeyCombination  fx:value="F1"/>
+                      </accelerator>
+                  </MenuItem>
               </items>
             </Menu>
           </menus>

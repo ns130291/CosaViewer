@@ -16,12 +16,19 @@ package de.nsvb.cosaviewer.ui;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import de.nsvb.cosaviewer.CosaViewer;
+import de.nsvb.cosaviewer.Veranstaltungsdaten;
+import de.nsvb.cosaviewer.Wettbewerbe;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -32,6 +39,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -42,6 +50,40 @@ import javafx.stage.Stage;
 public class MainWindowController implements Initializable {
 
     private FileChooser fileChooser = new FileChooser();
+    private DirectoryChooser directoryChooser = new DirectoryChooser();
+    private Wettbewerbe wettbewerbe = new Wettbewerbe();
+    private Veranstaltungsdaten veranstaltungsdaten = new Veranstaltungsdaten();
+    private File previousOpen;
+    private File previousOpenDirectory;
+
+    private void readVeranstaltungsdaten(ZipInputStream zip, byte[] data, int length) throws IOException {
+        zip.read(data, 0, length);
+        veranstaltungsdaten.read(data);
+    }
+
+    private void readWettbewerbe(ZipInputStream zip, byte[] data, int length) throws IOException {
+        zip.read(data, 0, length);
+        wettbewerbe.read(data);
+    }
+
+    private void readFileFromZip(String filename, ZipInputStream zip, byte[] data, int length) throws IOException {
+        switch (filename) {
+            case "vandat.c01":
+                readVeranstaltungsdaten(zip, data, length);
+                break;
+            case "Wettbew.c01":
+                readWettbewerbe(zip, data, length);
+                break;
+        }
+    }
+
+    private void readVeranstaltungsdaten(File file) {
+        veranstaltungsdaten.read(file);
+    }
+
+    private void readWettbewerbe(File file) {
+        wettbewerbe.read(file);
+    }
 
     @FXML
     private ListView section;
@@ -50,8 +92,87 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void handleOpen(ActionEvent event) {
-        System.out.println("Öffnen");
-        fileChooser.showOpenDialog((Stage) content.getScene().getWindow());
+        System.out.println("Datei öffnen");
+        if (previousOpen != null) {
+            fileChooser.setInitialDirectory(previousOpen);
+        }
+        File file = fileChooser.showOpenDialog((Stage) content.getScene().getWindow());
+        if (file != null) {
+            previousOpen = file.getParentFile();
+            String name = file.getName();
+            if (name.substring(name.lastIndexOf('.') + 1).toLowerCase().equals("zip")) {
+                System.out.println("Zip-Inhalt");
+
+                try {
+                    ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
+                    ZipEntry entry;
+                    while ((entry = zip.getNextEntry()) != null) {
+                        if (entry.getSize() > -1 && entry.getSize() <= Integer.MAX_VALUE) {
+                            byte data[] = new byte[(int) entry.getSize()];
+                            String filename = entry.getName();
+                            System.out.println("* " + filename);
+
+                            readFileFromZip(filename, zip, data, (int) entry.getSize());
+                        } else {
+                            System.out.println("Fehler beim Lesen der Zip-Datei");
+                        }
+                    }
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("VeranstaltungsScene.fxml"));
+                    Node n = loader.load();
+                    VeranstaltungsSceneController controller = loader.<VeranstaltungsSceneController>getController();
+                    if (veranstaltungsdaten != null) {
+                        controller.setData(veranstaltungsdaten);
+                    }
+                    content.getChildren().setAll(n);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.out.println("Not supported file format");
+            }
+        } else {
+            System.out.println("Auswahl abgebrochen");
+        }
+    }
+
+    @FXML
+    private void handleOpenFolder(ActionEvent event) {
+        System.out.println("Ordner öffnen");
+        if (previousOpenDirectory != null) {
+            directoryChooser.setInitialDirectory(previousOpenDirectory);
+        }
+        File directory = directoryChooser.showDialog((Stage) content.getScene().getWindow());
+        if (directory != null) {
+            previousOpenDirectory = directory;
+            for (File file : directory.listFiles()) {
+                switch (file.getName()) {
+                    case "vandat.c01":
+                        readVeranstaltungsdaten(file);
+                        break;
+                    case "Wettbew.c01":
+                        readWettbewerbe(file);
+                        break;
+                }
+            }
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("VeranstaltungsScene.fxml"));
+                Node n = loader.load();
+                VeranstaltungsSceneController controller = loader.<VeranstaltungsSceneController>getController();
+                if (veranstaltungsdaten != null) {
+                    controller.setData(veranstaltungsdaten);
+                }
+                content.getChildren().setAll(n);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            System.out.println("Auswahl abgebrochen");
+        }
     }
 
     @FXML
@@ -61,16 +182,21 @@ public class MainWindowController implements Initializable {
         stage.close();
     }
 
+    @FXML
+    private void handleAbout(ActionEvent event) {
+        System.out.println("Über");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         try {
-            Node n = FXMLLoader.load(getClass().getResource("VeranstaltungsScene.fxml"));
+            Node n = FXMLLoader.load(getClass().getResource("EmptyScene.fxml"));
             content.getChildren().setAll(n);
         } catch (IOException ex) {
             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         SelectionModel sm = section.getSelectionModel();
         sm.selectFirst();
         InvalidationListener listener = (Observable observable) -> {
@@ -88,6 +214,8 @@ public class MainWindowController implements Initializable {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("COSA Zip", "*.zip")
         );
+
+        directoryChooser.setTitle("COSA Veranstaltungsordner öffnen");
     }
 
 }

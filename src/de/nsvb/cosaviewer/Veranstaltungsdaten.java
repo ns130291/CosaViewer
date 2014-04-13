@@ -224,6 +224,544 @@ public class Veranstaltungsdaten {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKurzName() {
+        return kurzName;
+    }
+
+    public void setKurzName(String kurzName) {
+        this.kurzName = kurzName;
+    }
+
+    public String getVeranstalter() {
+        return veranstalter;
+    }
+
+    public void setVeranstalter(String veranstalter) {
+        this.veranstalter = veranstalter;
+    }
+
+    public String getAusrichter() {
+        return ausrichter;
+    }
+
+    public void setAusrichter(String ausrichter) {
+        this.ausrichter = ausrichter;
+    }
+
+    public String getVeranstaltungsNummer() {
+        return veranstaltungsNummer;
+    }
+
+    public void setVeranstaltungsNummer(String veranstaltungsNummer) {
+        this.veranstaltungsNummer = veranstaltungsNummer;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public String getWettkampfstätte() {
+        return wettkampfstätte;
+    }
+
+    public void setWettkampfstätte(String wettkampfstätte) {
+        this.wettkampfstätte = wettkampfstätte;
+    }
+
+    public String getDatum1() {
+        return datum1;
+    }
+
+    public void setDatum1(String datum1) {
+        this.datum1 = datum1;
+    }
+
+    public String getDatum2() {
+        return datum2;
+    }
+
+    public void setDatum2(String datum2) {
+        this.datum2 = datum2;
+    }
+
+    public String getDatum3() {
+        return datum3;
+    }
+
+    public void setDatum3(String datum3) {
+        this.datum3 = datum3;
+    }
+
+    public String getDatum4() {
+        return datum4;
+    }
+
+    public void setDatum4(String datum4) {
+        this.datum4 = datum4;
+    }
+
+    public String getVeranstaltungsSaison() {
+        return veranstaltungsSaison;
+    }
+
+    public void setVeranstaltungsSaison(String veranstaltungsSaison) {
+        this.veranstaltungsSaison = veranstaltungsSaison;
+    }
+
+    public String getStellplatzzeit() {
+        return stellplatzzeit;
+    }
+
+    public void setStellplatzzeit(String stellplatzzeit) {
+        this.stellplatzzeit = stellplatzzeit;
+    }
+
+    public String getGebührZusendungErgebnisliste() {
+        return gebührZusendungErgebnisliste;
+    }
+
+    public void setGebührZusendungErgebnisliste(String gebührZusendungErgebnisliste) {
+        this.gebührZusendungErgebnisliste = gebührZusendungErgebnisliste;
+    }
+
+    public String getAufschlagNachmeldegebühren() {
+        return aufschlagNachmeldegebühren;
+    }
+
+    public void setAufschlagNachmeldegebühren(String aufschlagNachmeldegebühren) {
+        this.aufschlagNachmeldegebühren = aufschlagNachmeldegebühren;
+    }
+
+    public boolean isAufschlagProzent() {
+        return aufschlagProzent;
+    }
+
+    public void setAufschlagProzent(boolean aufschlagProzent) {
+        this.aufschlagProzent = aufschlagProzent;
+    }
+
+    public boolean isBeginnNachmeldung() {
+        return beginnNachmeldung;
+    }
+
+    public void setBeginnNachmeldung(boolean beginnNachmeldung) {
+        this.beginnNachmeldung = beginnNachmeldung;
+    }
+
+    public boolean isZeitnahmeElektronisch() {
+        return zeitnahmeElektronisch;
+    }
+
+    public void setZeitnahmeElektronisch(boolean zeitnahmeElektronisch) {
+        this.zeitnahmeElektronisch = zeitnahmeElektronisch;
+    }
+
+    public boolean isAltersklassenPrüfung() {
+        return altersklassenPrüfung;
+    }
+
+    public void setAltersklassenPrüfung(boolean altersklassenPrüfung) {
+        this.altersklassenPrüfung = altersklassenPrüfung;
+    }
+
+    public boolean isPokalwertung() {
+        return pokalwertung;
+    }
+
+    public void setPokalwertung(boolean pokalwertung) {
+        this.pokalwertung = pokalwertung;
+    }
+
+    public boolean isAuswertungNachWertungsgruppen() {
+        return auswertungNachWertungsgruppen;
+    }
+
+    public void setAuswertungNachWertungsgruppen(boolean auswertungNachWertungsgruppen) {
+        this.auswertungNachWertungsgruppen = auswertungNachWertungsgruppen;
+    }
+
+    public boolean isHallenveranstaltung() {
+        return hallenveranstaltung;
+    }
+
+    public void setHallenveranstaltung(boolean hallenveranstaltung) {
+        this.hallenveranstaltung = hallenveranstaltung;
+    }
+
+    public boolean isAutomQualiKennzSetzen() {
+        return automQualiKennzSetzen;
+    }
+
+    public void setAutomQualiKennzSetzen(boolean automQualiKennzSetzen) {
+        this.automQualiKennzSetzen = automQualiKennzSetzen;
+    }
+
+    public boolean isAndruckKennzBSGbeiBewertNachDLVMehrkampfabz() {
+        return andruckKennzBSGbeiBewertNachDLVMehrkampfabz;
+    }
+
+    public void setAndruckKennzBSGbeiBewertNachDLVMehrkampfabz(boolean andruckKennzBSGbeiBewertNachDLVMehrkampfabz) {
+        this.andruckKennzBSGbeiBewertNachDLVMehrkampfabz = andruckKennzBSGbeiBewertNachDLVMehrkampfabz;
+    }
+
+    public boolean isBewertSenBereichAltersklassenfaktorenMehrkampf() {
+        return bewertSenBereichAltersklassenfaktorenMehrkampf;
+    }
+
+    public void setBewertSenBereichAltersklassenfaktorenMehrkampf(boolean bewertSenBereichAltersklassenfaktorenMehrkampf) {
+        this.bewertSenBereichAltersklassenfaktorenMehrkampf = bewertSenBereichAltersklassenfaktorenMehrkampf;
+    }
+
+    public boolean isMitWettbewerbenDMMDAMM() {
+        return mitWettbewerbenDMMDAMM;
+    }
+
+    public void setMitWettbewerbenDMMDAMM(boolean mitWettbewerbenDMMDAMM) {
+        this.mitWettbewerbenDMMDAMM = mitWettbewerbenDMMDAMM;
+    }
+
+    public boolean isWinderfassungKleinerU16() {
+        return winderfassungKleinerU16;
+    }
+
+    public void setWinderfassungKleinerU16(boolean winderfassungKleinerU16) {
+        this.winderfassungKleinerU16 = winderfassungKleinerU16;
+    }
+
+    public boolean isAltersklassenKleinerU10() {
+        return altersklassenKleinerU10;
+    }
+
+    public void setAltersklassenKleinerU10(boolean altersklassenKleinerU10) {
+        this.altersklassenKleinerU10 = altersklassenKleinerU10;
+    }
+
+    public boolean isGemischteWettbewerbe() {
+        return gemischteWettbewerbe;
+    }
+
+    public void setGemischteWettbewerbe(boolean gemischteWettbewerbe) {
+        this.gemischteWettbewerbe = gemischteWettbewerbe;
+    }
+
+    public boolean[] getGesperrtFlachGerade() {
+        return gesperrtFlachGerade;
+    }
+
+    public void setGesperrtFlachGerade(boolean[] gesperrtFlachGerade) {
+        this.gesperrtFlachGerade = gesperrtFlachGerade;
+    }
+
+    public boolean[] getGesperrtFlachRund() {
+        return gesperrtFlachRund;
+    }
+
+    public void setGesperrtFlachRund(boolean[] gesperrtFlachRund) {
+        this.gesperrtFlachRund = gesperrtFlachRund;
+    }
+
+    public boolean[] getGesperrtHürdenGerade() {
+        return gesperrtHürdenGerade;
+    }
+
+    public void setGesperrtHürdenGerade(boolean[] gesperrtHürdenGerade) {
+        this.gesperrtHürdenGerade = gesperrtHürdenGerade;
+    }
+
+    public boolean[] getGesperrtHürdenRund() {
+        return gesperrtHürdenRund;
+    }
+
+    public void setGesperrtHürdenRund(boolean[] gesperrtHürdenRund) {
+        this.gesperrtHürdenRund = gesperrtHürdenRund;
+    }
+
+    public boolean[] getTage() {
+        return tage;
+    }
+
+    public void setTage(boolean[] tage) {
+        this.tage = tage;
+    }
+
+    public Typ getVeranstaltungsTyp() {
+        return veranstaltungsTyp;
+    }
+
+    public void setVeranstaltungsTyp(Typ veranstaltungsTyp) {
+        this.veranstaltungsTyp = veranstaltungsTyp;
+    }
+
+    public int getAnzahlUrkundenJeWettbewerb() {
+        return anzahlUrkundenJeWettbewerb;
+    }
+
+    public void setAnzahlUrkundenJeWettbewerb(int anzahlUrkundenJeWettbewerb) {
+        this.anzahlUrkundenJeWettbewerb = anzahlUrkundenJeWettbewerb;
+    }
+
+    public int getAnzahlBahnenFlachGerade() {
+        return anzahlBahnenFlachGerade;
+    }
+
+    public void setAnzahlBahnenFlachGerade(int anzahlBahnenFlachGerade) {
+        this.anzahlBahnenFlachGerade = anzahlBahnenFlachGerade;
+    }
+
+    public int getAnzahlBahnenFlachRund() {
+        return anzahlBahnenFlachRund;
+    }
+
+    public void setAnzahlBahnenFlachRund(int anzahlBahnenFlachRund) {
+        this.anzahlBahnenFlachRund = anzahlBahnenFlachRund;
+    }
+
+    public int getAnzahlBahnenHürdenGerade() {
+        return anzahlBahnenHürdenGerade;
+    }
+
+    public void setAnzahlBahnenHürdenGerade(int anzahlBahnenHürdenGerade) {
+        this.anzahlBahnenHürdenGerade = anzahlBahnenHürdenGerade;
+    }
+
+    public int getAnzahlBahnenHürdenRund() {
+        return anzahlBahnenHürdenRund;
+    }
+
+    public void setAnzahlBahnenHürdenRund(int anzahlBahnenHürdenRund) {
+        this.anzahlBahnenHürdenRund = anzahlBahnenHürdenRund;
+    }
+
+    public int getAnzahlAusdruckeJeWettkampflisteLauf() {
+        return anzahlAusdruckeJeWettkampflisteLauf;
+    }
+
+    public void setAnzahlAusdruckeJeWettkampflisteLauf(int anzahlAusdruckeJeWettkampflisteLauf) {
+        this.anzahlAusdruckeJeWettkampflisteLauf = anzahlAusdruckeJeWettkampflisteLauf;
+    }
+
+    public int getAnzahlAusdruckeJeWettkampflisteStaffel() {
+        return anzahlAusdruckeJeWettkampflisteStaffel;
+    }
+
+    public void setAnzahlAusdruckeJeWettkampflisteStaffel(int anzahlAusdruckeJeWettkampflisteStaffel) {
+        this.anzahlAusdruckeJeWettkampflisteStaffel = anzahlAusdruckeJeWettkampflisteStaffel;
+    }
+
+    public int getAnzahlAusdruckeJeWettkampflisteHochStab() {
+        return anzahlAusdruckeJeWettkampflisteHochStab;
+    }
+
+    public void setAnzahlAusdruckeJeWettkampflisteHochStab(int anzahlAusdruckeJeWettkampflisteHochStab) {
+        this.anzahlAusdruckeJeWettkampflisteHochStab = anzahlAusdruckeJeWettkampflisteHochStab;
+    }
+
+    public int getAnzahlAusdruckeJeWettkampflisteTechnik() {
+        return anzahlAusdruckeJeWettkampflisteTechnik;
+    }
+
+    public void setAnzahlAusdruckeJeWettkampflisteTechnik(int anzahlAusdruckeJeWettkampflisteTechnik) {
+        this.anzahlAusdruckeJeWettkampflisteTechnik = anzahlAusdruckeJeWettkampflisteTechnik;
+    }
+
+    public int getAnzahlFreieStartpositionenLauf() {
+        return anzahlFreieStartpositionenLauf;
+    }
+
+    public void setAnzahlFreieStartpositionenLauf(int anzahlFreieStartpositionenLauf) {
+        this.anzahlFreieStartpositionenLauf = anzahlFreieStartpositionenLauf;
+    }
+
+    public int getAnzahlFreieStartpositionenTechnik() {
+        return anzahlFreieStartpositionenTechnik;
+    }
+
+    public void setAnzahlFreieStartpositionenTechnik(int anzahlFreieStartpositionenTechnik) {
+        this.anzahlFreieStartpositionenTechnik = anzahlFreieStartpositionenTechnik;
+    }
+
+    public int getAnzahlAusdruckeErgebnisprotokollErfassung() {
+        return anzahlAusdruckeErgebnisprotokollErfassung;
+    }
+
+    public void setAnzahlAusdruckeErgebnisprotokollErfassung(int anzahlAusdruckeErgebnisprotokollErfassung) {
+        this.anzahlAusdruckeErgebnisprotokollErfassung = anzahlAusdruckeErgebnisprotokollErfassung;
+    }
+
+    public String getOrgGebührErwEinzel() {
+        return orgGebührErwEinzel;
+    }
+
+    public void setOrgGebührErwEinzel(String orgGebührErwEinzel) {
+        this.orgGebührErwEinzel = orgGebührErwEinzel;
+    }
+
+    public String getOrgGebührErwStaffel() {
+        return orgGebührErwStaffel;
+    }
+
+    public void setOrgGebührErwStaffel(String orgGebührErwStaffel) {
+        this.orgGebührErwStaffel = orgGebührErwStaffel;
+    }
+
+    public String getOrgGebührErwMehr() {
+        return orgGebührErwMehr;
+    }
+
+    public void setOrgGebührErwMehr(String orgGebührErwMehr) {
+        this.orgGebührErwMehr = orgGebührErwMehr;
+    }
+
+    public String getOrgGebührErwLauf() {
+        return orgGebührErwLauf;
+    }
+
+    public void setOrgGebührErwLauf(String orgGebührErwLauf) {
+        this.orgGebührErwLauf = orgGebührErwLauf;
+    }
+
+    public String getOrgGebührErwDMM() {
+        return orgGebührErwDMM;
+    }
+
+    public void setOrgGebührErwDMM(String orgGebührErwDMM) {
+        this.orgGebührErwDMM = orgGebührErwDMM;
+    }
+
+    public String getOrgGebührU20U18Einzel() {
+        return orgGebührU20U18Einzel;
+    }
+
+    public void setOrgGebührU20U18Einzel(String orgGebührU20U18Einzel) {
+        this.orgGebührU20U18Einzel = orgGebührU20U18Einzel;
+    }
+
+    public String getOrgGebührU20U18Staffel() {
+        return orgGebührU20U18Staffel;
+    }
+
+    public void setOrgGebührU20U18Staffel(String orgGebührU20U18Staffel) {
+        this.orgGebührU20U18Staffel = orgGebührU20U18Staffel;
+    }
+
+    public String getOrgGebührU20U18Mehr() {
+        return orgGebührU20U18Mehr;
+    }
+
+    public void setOrgGebührU20U18Mehr(String orgGebührU20U18Mehr) {
+        this.orgGebührU20U18Mehr = orgGebührU20U18Mehr;
+    }
+
+    public String getOrgGebührU20U18Lauf() {
+        return orgGebührU20U18Lauf;
+    }
+
+    public void setOrgGebührU20U18Lauf(String orgGebührU20U18Lauf) {
+        this.orgGebührU20U18Lauf = orgGebührU20U18Lauf;
+    }
+
+    public String getOrgGebührU20U18DMM() {
+        return orgGebührU20U18DMM;
+    }
+
+    public void setOrgGebührU20U18DMM(String orgGebührU20U18DMM) {
+        this.orgGebührU20U18DMM = orgGebührU20U18DMM;
+    }
+
+    public String getOrgGebührU16U8Einzel() {
+        return orgGebührU16U8Einzel;
+    }
+
+    public void setOrgGebührU16U8Einzel(String orgGebührU16U8Einzel) {
+        this.orgGebührU16U8Einzel = orgGebührU16U8Einzel;
+    }
+
+    public String getOrgGebührU16U8Staffel() {
+        return orgGebührU16U8Staffel;
+    }
+
+    public void setOrgGebührU16U8Staffel(String orgGebührU16U8Staffel) {
+        this.orgGebührU16U8Staffel = orgGebührU16U8Staffel;
+    }
+
+    public String getOrgGebührU16U8Mehr() {
+        return orgGebührU16U8Mehr;
+    }
+
+    public void setOrgGebührU16U8Mehr(String orgGebührU16U8Mehr) {
+        this.orgGebührU16U8Mehr = orgGebührU16U8Mehr;
+    }
+
+    public String getOrgGebührU16U8Lauf() {
+        return orgGebührU16U8Lauf;
+    }
+
+    public void setOrgGebührU16U8Lauf(String orgGebührU16U8Lauf) {
+        this.orgGebührU16U8Lauf = orgGebührU16U8Lauf;
+    }
+
+    public String getOrgGebührU16U8DMM() {
+        return orgGebührU16U8DMM;
+    }
+
+    public void setOrgGebührU16U8DMM(String orgGebührU16U8DMM) {
+        this.orgGebührU16U8DMM = orgGebührU16U8DMM;
+    }
+
+    public String getOrgGebühr3_4KampfU16U8() {
+        return orgGebühr3_4KampfU16U8;
+    }
+
+    public void setOrgGebühr3_4KampfU16U8(String orgGebühr3_4KampfU16U8) {
+        this.orgGebühr3_4KampfU16U8 = orgGebühr3_4KampfU16U8;
+    }
+
+    public String getOrgGebühr4_9KampfMJU16() {
+        return orgGebühr4_9KampfMJU16;
+    }
+
+    public void setOrgGebühr4_9KampfMJU16(String orgGebühr4_9KampfMJU16) {
+        this.orgGebühr4_9KampfMJU16 = orgGebühr4_9KampfMJU16;
+    }
+
+    public String getOrgGebühr4_7KampfWJU16() {
+        return orgGebühr4_7KampfWJU16;
+    }
+
+    public void setOrgGebühr4_7KampfWJU16(String orgGebühr4_7KampfWJU16) {
+        this.orgGebühr4_7KampfWJU16 = orgGebühr4_7KampfWJU16;
+    }
+
+    public String getOrgGebühr5_10KampfMJU20U18() {
+        return orgGebühr5_10KampfMJU20U18;
+    }
+
+    public void setOrgGebühr5_10KampfMJU20U18(String orgGebühr5_10KampfMJU20U18) {
+        this.orgGebühr5_10KampfMJU20U18 = orgGebühr5_10KampfMJU20U18;
+    }
+
+    public String getOrgGebühr4_7KampfWJU20U18() {
+        return orgGebühr4_7KampfWJU20U18;
+    }
+
+    public void setOrgGebühr4_7KampfWJU20U18(String orgGebühr4_7KampfWJU20U18) {
+        this.orgGebühr4_7KampfWJU20U18 = orgGebühr4_7KampfWJU20U18;
+    }
+    
+    
+
     public enum Typ {
 
         VEREINSOFFEN("Vereinsoffen"),

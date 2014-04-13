@@ -17,6 +17,7 @@
 
 package de.nsvb.cosaviewer.ui;
 
+import de.nsvb.cosaviewer.Veranstaltungsdaten;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -30,8 +31,18 @@ import javafx.scene.control.Label;
  */
 public class VeranstaltungsSceneController implements Initializable {
     
-    //@FXML
-    //private Label label;
+    @FXML
+    private Label name;
+    @FXML
+    private Label veranstalter;
+    @FXML
+    private Label ausrichter;
+    
+    public void setData(Veranstaltungsdaten veranstaltungsdaten){
+        name.setText(veranstaltungsdaten.getName());
+        veranstalter.setText(veranstaltungsdaten.getVeranstalter());
+        ausrichter.setText(veranstaltungsdaten.getAusrichter());
+    }
 
     /**
      * Initializes the controller class.
