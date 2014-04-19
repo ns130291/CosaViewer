@@ -1,8 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2014 ns130291
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.nsvb.cosaviewer.ui;
 
 import javafx.beans.property.IntegerProperty;
@@ -15,9 +27,25 @@ import javafx.beans.property.StringProperty;
  * @author ns130291
  */
 public final class SectionItem {
+    
+    public static final int VERANSTALTUNG = 1;
+    public static final int VORGABEN = 2;
+    public static final int WETTBEWERBE = 3;
+    public static final int TEILNEHMER = 4;
+    public static final int VEREINE = 5;
+    public static final int DRUCKOPTIONEN = 6;
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
+    
+    public SectionItem(){
+        
+    }
+    
+    public SectionItem(int id, String name){
+        this.id.set(id);
+        this.name.set(name);
+    }
 
     public int getId() {
         return id.get();

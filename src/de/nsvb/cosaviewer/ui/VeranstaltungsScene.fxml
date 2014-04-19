@@ -17,19 +17,31 @@
           <children>
             <GridPane hgap="20.0" vgap="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
               <children>
-                <Label fx:id="name" text="Kreismeisterschaften Jugend U16 + U14 Einzel Aktive, Jugend U20 + U18 Sprint + Mittelstrecke" textOverrun="CENTER_ELLIPSIS" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="0">
+                <Label fx:id="name" text="" textOverrun="CENTER_ELLIPSIS" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="0">
                   <font>
                     <Font name="System Bold" size="20.0" />
                   </font>
                 </Label>
-                <Label styleClass="vLabel" text="Veranstalter" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label fx:id="veranstalter" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label styleClass="vLabel" text="Ausrichter" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Label fx:id="ausrichter" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label styleClass="vLabel" text="Veranstalter" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="veranstalter" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label styleClass="vLabel" text="Ausrichter" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <Label fx:id="ausrichter" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label styleClass="vLabel" text="Veranstaltungsnummer" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                <Label styleClass="vLabel" text="Ort" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <Label styleClass="vLabel" text="Wettkampfstätte" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                <Label fx:id="ort" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="wettkampfstätte" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label fx:id="veranstaltungsnummer" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label styleClass="vLabel" text="Kurzname" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                <Label fx:id="kurzname" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label styleClass="vLabel" text="Kategorie" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                <Label fx:id="kategorie" text="" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <Label styleClass="vLabel" text="Datum" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="datum" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               </children>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="123.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="360.0" minWidth="10.0" prefWidth="357.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="133.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="360.0" minWidth="10.0" prefWidth="347.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />

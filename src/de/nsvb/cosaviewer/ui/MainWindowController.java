@@ -51,18 +51,53 @@ public class MainWindowController implements Initializable {
 
     private FileChooser fileChooser = new FileChooser();
     private DirectoryChooser directoryChooser = new DirectoryChooser();
-    private Wettbewerbe wettbewerbe = new Wettbewerbe();
-    private Veranstaltungsdaten veranstaltungsdaten = new Veranstaltungsdaten();
+    private Wettbewerbe wettbewerbe;
+    private Veranstaltungsdaten veranstaltungsdaten;
     private File previousOpen;
     private File previousOpenDirectory;
+    private int selection = 1;
+
+    private void sectionVeranstaltungsdaten() {
+        if (veranstaltungsdaten != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("VeranstaltungsScene.fxml"));
+                Node n = loader.load();
+                VeranstaltungsSceneController controller = loader.<VeranstaltungsSceneController>getController();
+                if (veranstaltungsdaten != null) {
+                    controller.setData(veranstaltungsdaten);
+                }
+                content.getChildren().setAll(n);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void sectionVorgaben() {
+        if (veranstaltungsdaten != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("VorgabenScene.fxml"));
+                Node n = loader.load();
+                VorgabenSceneController controller = loader.<VorgabenSceneController>getController();
+                if (veranstaltungsdaten != null) {
+                    controller.setData(veranstaltungsdaten);
+                }
+                content.getChildren().setAll(n);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     private void readVeranstaltungsdaten(ZipInputStream zip, byte[] data, int length) throws IOException {
         zip.read(data, 0, length);
+        veranstaltungsdaten = new Veranstaltungsdaten();
         veranstaltungsdaten.read(data);
     }
 
     private void readWettbewerbe(ZipInputStream zip, byte[] data, int length) throws IOException {
         zip.read(data, 0, length);
+        wettbewerbe = new Wettbewerbe();
         wettbewerbe.read(data);
     }
 
@@ -78,10 +113,12 @@ public class MainWindowController implements Initializable {
     }
 
     private void readVeranstaltungsdaten(File file) {
+        veranstaltungsdaten = new Veranstaltungsdaten();
         veranstaltungsdaten.read(file);
     }
 
     private void readWettbewerbe(File file) {
+        wettbewerbe = new Wettbewerbe();
         wettbewerbe.read(file);
     }
 
@@ -118,13 +155,7 @@ public class MainWindowController implements Initializable {
                         }
                     }
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("VeranstaltungsScene.fxml"));
-                    Node n = loader.load();
-                    VeranstaltungsSceneController controller = loader.<VeranstaltungsSceneController>getController();
-                    if (veranstaltungsdaten != null) {
-                        controller.setData(veranstaltungsdaten);
-                    }
-                    content.getChildren().setAll(n);
+                    sectionVeranstaltungsdaten();
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -200,13 +231,19 @@ public class MainWindowController implements Initializable {
         SelectionModel sm = section.getSelectionModel();
         sm.selectFirst();
         InvalidationListener listener = (Observable observable) -> {
-            System.out.println(sm.getSelectedItem());
-            /*try {
-             Node n = FXMLLoader.load(getClass().getResource("VeranstaltungsScene.fxml"));
-             content.getChildren().setAll(n);
-             } catch (IOException ex) {
-             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-             }*/
+            System.out.println(sm.getSelectedItem() + " " + ((SectionItem) sm.getSelectedItem()).getId());
+            int sel = ((SectionItem) sm.getSelectedItem()).getId();
+            if (sel != selection) {
+                selection = sel;
+                switch (sel) {
+                    case SectionItem.VERANSTALTUNG:
+                        sectionVeranstaltungsdaten();
+                        break;
+                    case SectionItem.VORGABEN:
+                        sectionVorgaben();
+                        break;
+                }
+            }
         };
         sm.selectedIndexProperty().addListener(listener);
 

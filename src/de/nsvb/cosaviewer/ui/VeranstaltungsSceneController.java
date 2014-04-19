@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.nsvb.cosaviewer.ui;
 
 import de.nsvb.cosaviewer.Veranstaltungsdaten;
@@ -30,18 +29,66 @@ import javafx.scene.control.Label;
  * @author ns130291
  */
 public class VeranstaltungsSceneController implements Initializable {
-    
+
     @FXML
     private Label name;
     @FXML
     private Label veranstalter;
     @FXML
     private Label ausrichter;
-    
-    public void setData(Veranstaltungsdaten veranstaltungsdaten){
-        name.setText(veranstaltungsdaten.getName());
-        veranstalter.setText(veranstaltungsdaten.getVeranstalter());
-        ausrichter.setText(veranstaltungsdaten.getAusrichter());
+    @FXML
+    private Label ort;
+    @FXML
+    private Label wettkampfstätte;
+    @FXML
+    private Label veranstaltungsnummer;
+    @FXML
+    private Label kurzname;
+    @FXML
+    private Label kategorie;
+    @FXML
+    private Label datum;
+
+    public void setData(Veranstaltungsdaten v) {
+        setText(name, v.getName());
+        setText(veranstalter, v.getVeranstalter());
+        setText(ausrichter, v.getAusrichter());
+        setText(ort, v.getOrt());
+        setText(wettkampfstätte, v.getWettkampfstätte());
+        setText(veranstaltungsnummer, v.getVeranstaltungsNummer());
+        setText(kurzname, v.getKurzName());
+        setText(kategorie, v.getVeranstaltungsTyp().toString());
+        setText(datum, createDatumString(v.getDatum1(), v.getDatum2(), v.getDatum3(), v.getDatum4(), v.getTage()));
+    }
+
+    private String createDatumString(String datum1, String datum2, String datum3, String datum4, boolean[] tage) {
+        int t = 0;
+        for (boolean tag : tage) {
+            if (tag) {
+                t++;
+            }
+        }
+        //TODO aufeinanderfolgende Tage anders formatieren
+        if (t == 1) {
+            return datum1;
+        } else if (t == 2) {
+            return datum1 + " & " + datum2;
+        } else if (t == 3) {
+            return datum1 + ", " + datum2 + " & " + datum3;
+        } else if (t == 4) {
+            return datum1 + ", " + datum2 + ", " + datum3 + " & " + datum4;
+        } else {
+            return "";
+        }
+    }
+
+    private void setText(Label l, String text) {
+        if (text == null || text.equals("")) {
+            l.setText("nicht gesetzt");
+            l.getStyleClass().add("emptyLabel");
+        } else {
+            l.setText(text);
+        }
     }
 
     /**
@@ -50,6 +97,6 @@ public class VeranstaltungsSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

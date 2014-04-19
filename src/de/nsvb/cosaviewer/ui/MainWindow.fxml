@@ -43,12 +43,12 @@
             <ListView fx:id="section" prefHeight="576.0" prefWidth="200.0" HBox.hgrow="NEVER">
               <items>
                 <FXCollections fx:factory="observableArrayList">
-                  <SectionItem id="1" name="Veranstaltung" />
-                  <SectionItem id="2" name="Vorgaben" />
-                  <SectionItem id="3" name="Wettbewerbe" />
-                  <SectionItem id="4" name="Teilnehmer" />
-                  <SectionItem id="5" name="Vereine" />
-                  <SectionItem id="6" name="Druckoptionen" />
+                  <SectionMenu fx:constant="VERANSTALTUNG"/>
+                  <SectionMenu fx:constant="VORGABEN" />
+                  <SectionMenu fx:constant="WETTBEWERBE" />
+                  <SectionMenu fx:constant="TEILNEHMER" />
+                  <SectionMenu fx:constant="VEREINE" />
+                  <SectionMenu fx:constant="DRUCKOPTIONEN" />
                 </FXCollections>
               </items>
             </ListView>
