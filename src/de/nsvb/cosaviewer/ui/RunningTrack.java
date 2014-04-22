@@ -34,11 +34,6 @@ public class RunningTrack extends Canvas{
     
     public void setTracks(int bahnenGerade, int bahnenRund, boolean[] gesperrtGerade, boolean[] gesperrtRund){
         GraphicsContext gc = getGraphicsContext2D();
-
-        
-        
-        int bahnen_gerade = bahnenGerade;
-        int bahnen_rund = bahnenRund;
         
         //TODO: gesperrte Bahnen
         
@@ -67,14 +62,14 @@ public class RunningTrack extends Canvas{
         gc.setLineWidth(laneWidth);
         gc.setStroke(Color.DARKRED);
         //gc.setStroke(Color.BLUE);
-        for (int i = 1; i <= bahnen_gerade; i++) {
+        for (int i = 1; i <= bahnenGerade; i++) {
             //obere Gerade
             double y_line = y + laneWidth / 2 + laneWidth * (10 - i);
             gc.strokeLine(x, y_line, x + length_line, y_line);
 
         }
         //gc.setStroke(Color.DARKRED);
-        for (int i = 1; i <= bahnen_rund; i++) {
+        for (int i = 1; i <= bahnenRund; i++) {
             //rechte Kurve
             double a = (radius + laneWidth * i - laneWidth / 2) * 2;
             gc.strokeArc(x - laneWidth * i - radius + laneWidth / 2, y + laneWidth / 2 + laneWidth * (10 - i), a, a, 0, 90, ArcType.OPEN);
@@ -83,15 +78,15 @@ public class RunningTrack extends Canvas{
         //Linien
         gc.setLineWidth(lineWidth);
         gc.setStroke(Color.WHITE);
-        double y_line = y + laneWidth * (10 - bahnen_gerade);
-        gc.strokeLine(x + hundred_meter, y_line, x + hundred_meter, y_line + laneWidth * bahnen_gerade);
-        gc.strokeLine(x + hundred_ten_meter, y_line, x + hundred_ten_meter, y_line + laneWidth * bahnen_gerade);
-        for (int i = 0; i <= bahnen_gerade; i++) {
+        double y_line = y + laneWidth * (10 - bahnenGerade);
+        gc.strokeLine(x + hundred_meter, y_line, x + hundred_meter, y_line + laneWidth * bahnenGerade);
+        gc.strokeLine(x + hundred_ten_meter, y_line, x + hundred_ten_meter, y_line + laneWidth * bahnenGerade);
+        for (int i = 0; i <= bahnenGerade; i++) {
             //obere Gerade
             y_line = y + laneWidth * (10 - i);
             gc.strokeLine(x, y_line, x + hundred_ten_meter, y_line);
         }
-        for (int i = 0; i <= bahnen_rund; i++) {
+        for (int i = 0; i <= bahnenRund; i++) {
             //rechte Kurve
             double a = (radius + laneWidth * i) * 2;
             gc.strokeArc(x - laneWidth * i - radius, y + laneWidth * (10 - i), a, a, 0, 90, ArcType.OPEN);

@@ -22,7 +22,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 
 /**
  * FXML Controller class
@@ -32,17 +33,68 @@ import javafx.scene.layout.AnchorPane;
 public class VorgabenSceneController implements Initializable {
     
     @FXML
-    private RunningTrack runningTrack;
+    private RunningTrack runningtrack;
     @FXML
-    private AnchorPane content;
+    private ScrollPane content;
+    @FXML
+    private Label erwEinzel;
+    @FXML
+    private Label erwStaffel;
+    @FXML
+    private Label erwMehr;
+    @FXML
+    private Label erwLauf;
+    @FXML
+    private Label erwDMM;
+    @FXML
+    private Label U20U18Einzel;
+    @FXML
+    private Label U20U18Staffel;
+    @FXML
+    private Label U20U18Mehr;
+    @FXML
+    private Label U20U18Lauf;
+    @FXML
+    private Label U20U18DMM;
+    @FXML
+    private Label U16U8Einzel;
+    @FXML
+    private Label U16U8Staffel;
+    @FXML
+    private Label U16U8Mehr;
+    @FXML
+    private Label U16U8Lauf;
+    @FXML
+    private Label U16U8DMM;
 
-    public void setData(Veranstaltungsdaten veranstaltungsdaten){
-        if(runningTrack == null){
+    public void setData(Veranstaltungsdaten v){
+        if(runningtrack == null){//TODO: Remove
             //throw new NullPointerException("runningTrack ist null");
-            runningTrack = new RunningTrack();
-            content.getChildren().add(runningTrack);
+            System.out.println("runningTrack ist null");
+            //runningtrack = new RunningTrack();
+            //content.getChildren().add(runningtrack);
+        }else{
+            System.out.println("runningTrack ist da");
+            runningtrack.setTracks(v.getAnzahlBahnenFlachGerade(), v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachGerade(), v.getGesperrtFlachRund());
         }
-        runningTrack.setTracks(veranstaltungsdaten.getAnzahlBahnenFlachGerade(), veranstaltungsdaten.getAnzahlBahnenFlachRund(), veranstaltungsdaten.getGesperrtFlachGerade(), veranstaltungsdaten.getGesperrtFlachRund());
+        
+        erwEinzel.setText(v.getOrgGebührErwEinzel());
+        erwStaffel.setText(v.getOrgGebührErwStaffel());
+        erwMehr.setText(v.getOrgGebührErwMehr());
+        erwLauf.setText(v.getOrgGebührErwLauf());
+        erwDMM.setText(v.getOrgGebührErwDMM());
+        
+        U20U18Einzel.setText(v.getOrgGebührU20U18Einzel());
+        U20U18Staffel.setText(v.getOrgGebührU20U18Staffel());
+        U20U18Mehr.setText(v.getOrgGebührU20U18Mehr());
+        U20U18Lauf.setText(v.getOrgGebührU20U18Lauf());
+        U20U18DMM.setText(v.getOrgGebührU20U18DMM());
+        
+        U16U8Einzel.setText(v.getOrgGebührU16U8Einzel());
+        U16U8Staffel.setText(v.getOrgGebührU16U8Staffel());
+        U16U8Mehr.setText(v.getOrgGebührU16U8Mehr());
+        U16U8Lauf.setText(v.getOrgGebührU16U8Lauf());
+        U16U8DMM.setText(v.getOrgGebührU16U8DMM());
     }
     
     /**
@@ -50,7 +102,7 @@ public class VorgabenSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        content.setFitToWidth(true);
     }    
     
 }
