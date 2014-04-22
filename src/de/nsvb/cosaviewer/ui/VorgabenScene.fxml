@@ -18,7 +18,7 @@
           <children>
             <Label styleClass="hLabel" text="Gebühren" underline="false" />
             <Separator />
-            <GridPane hgap="5.0" vgap="5.0">
+            <GridPane hgap="5.0" maxWidth="500.0" vgap="5.0">
               <children>
                 <Label text="Erwachsene" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <Label text="U20 - U18" GridPane.columnIndex="0" GridPane.rowIndex="2" />
@@ -45,14 +45,41 @@
                 <Label fx:id="U16U8DMM" text="" textAlignment="RIGHT" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
               </children>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="70.0" prefWidth="96.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.0" minWidth="10.0" prefWidth="78.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.0" minWidth="10.0" prefWidth="78.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="79.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="79.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="79.0" />
               </columnConstraints>
               <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <Region prefHeight="10.0" prefWidth="-1.0" />
+            <Label styleClass="h2Label" text="Doppelmehrkämpfe" />
+            <GridPane hgap="5.0" maxWidth="500.0" vgap="5.0">
+              <children>
+                <Label text="Drei- und Vierkampf U16 - U8" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label text="Vier- und Neunkampf Männl. Jugend U16" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label text="Vier- und Siebenkampf Weibl. Jugend U16" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label text="Fünf- und Zehnkampf Männl. Jugend U20 - U18" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <Label text="Vier- und Siebenkampf Weibl. Jugend U20 - U18" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <Label fx:id="g3_4KampfU16U8" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+                <Label fx:id="g4_9KampfMJU16" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                <Label fx:id="g4_7KampfWJU16" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                <Label fx:id="g5_10KampfMJU20U18" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                <Label fx:id="g4_7KampfWJU20U18" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="413.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="50.0" prefWidth="82.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -63,11 +90,74 @@
         </VBox>
         <VBox>
           <children>
-            <Label styleClass="hLabel" text="Bahnen flach" />
+            <Label styleClass="hLabel" text="Bahnen Flach" />
             <Separator />
-            <HBox>
+            <HBox spacing="10.0">
               <children>
-                <RunningTrack fx:id="runningtrack" />
+                <RunningTrack fx:id="runningtrackFlach" />
+                <GridPane hgap="5.0" vgap="5.0">
+                  <children>
+                    <Label text="Bahnen gerade" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label text="Bahnen rund" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label text="Gesperrt gerade" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <Label text="Gesperrt rund" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <GridPane GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                      <children>
+                        <Label text="2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="1" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="7" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="8" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="9" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Label text="10" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                    <Label fx:id="bahnenFlachGerade" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+                    <Label fx:id="bahnenFlachRund" text="" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </children>
+            </HBox>
+          </children>
+        </VBox>
+        <VBox>
+          <children>
+            <Label styleClass="hLabel" text="Bahnen Hürden" />
+            <Separator />
+            <HBox spacing="10.0">
+              <children>
+                <RunningTrack fx:id="runningtrackHürden" />
                 <Label text="Label" />
               </children>
             </HBox>

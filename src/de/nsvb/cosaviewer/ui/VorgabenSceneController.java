@@ -33,7 +33,9 @@ import javafx.scene.control.ScrollPane;
 public class VorgabenSceneController implements Initializable {
     
     @FXML
-    private RunningTrack runningtrack;
+    private RunningTrack runningtrackFlach;
+    @FXML
+    private RunningTrack runningtrackHürden;
     @FXML
     private ScrollPane content;
     @FXML
@@ -66,17 +68,34 @@ public class VorgabenSceneController implements Initializable {
     private Label U16U8Lauf;
     @FXML
     private Label U16U8DMM;
+    @FXML
+    private Label g3_4KampfU16U8;
+    @FXML
+    private Label g4_9KampfMJU16;
+    @FXML
+    private Label g4_7KampfWJU16;
+    @FXML
+    private Label g5_10KampfMJU20U18;
+    @FXML
+    private Label g4_7KampfWJU20U18;
+    @FXML
+    private Label bahnenFlachGerade;
+    @FXML
+    private Label bahnenFlachRund;
 
     public void setData(Veranstaltungsdaten v){
-        if(runningtrack == null){//TODO: Remove
+        if(runningtrackFlach == null){//TODO: Remove
             //throw new NullPointerException("runningTrack ist null");
             System.out.println("runningTrack ist null");
             //runningtrack = new RunningTrack();
             //content.getChildren().add(runningtrack);
         }else{
             System.out.println("runningTrack ist da");
-            runningtrack.setTracks(v.getAnzahlBahnenFlachGerade(), v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachGerade(), v.getGesperrtFlachRund());
+            runningtrackFlach.setTracks(v.getAnzahlBahnenFlachGerade(), v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachGerade(), v.getGesperrtFlachRund());
         }
+        runningtrackHürden.setTracks(v.getAnzahlBahnenHürdenGerade(), v.getAnzahlBahnenHürdenRund(), v.getGesperrtHürdenGerade(), v.getGesperrtHürdenRund());
+        bahnenFlachGerade.setText(v.getAnzahlBahnenFlachGerade() + "");
+        bahnenFlachRund.setText(v.getAnzahlBahnenFlachRund() + "");
         
         erwEinzel.setText(v.getOrgGebührErwEinzel());
         erwStaffel.setText(v.getOrgGebührErwStaffel());
@@ -95,6 +114,12 @@ public class VorgabenSceneController implements Initializable {
         U16U8Mehr.setText(v.getOrgGebührU16U8Mehr());
         U16U8Lauf.setText(v.getOrgGebührU16U8Lauf());
         U16U8DMM.setText(v.getOrgGebührU16U8DMM());
+        
+        g3_4KampfU16U8.setText(v.getOrgGebühr3_4KampfU16U8());
+        g4_9KampfMJU16.setText(v.getOrgGebühr4_9KampfMJU16());
+        g4_7KampfWJU16.setText(v.getOrgGebühr4_7KampfWJU16());
+        g5_10KampfMJU20U18.setText(v.getOrgGebühr5_10KampfMJU20U18());
+        g4_7KampfWJU20U18.setText(v.getOrgGebühr4_7KampfWJU20U18());
     }
     
     /**
