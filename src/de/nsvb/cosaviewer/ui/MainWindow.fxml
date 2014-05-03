@@ -24,6 +24,13 @@
                           <javafx.scene.input.KeyCodeCombination shortcut="DOWN" code="O" control="ANY" alt="UP" meta="ANY" shift="DOWN" />  
                       </accelerator>
                   </MenuItem>
+                  <SeparatorMenuItem />
+                  <MenuItem mnemonicParsing="false" onAction="#handleReload" text="Neu einlesen" >                      
+                      <accelerator>
+                          <javafx.scene.input.KeyCombination  fx:value="F5"/>
+                      </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem />
                 <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Beenden" />
               </items>
             </Menu>

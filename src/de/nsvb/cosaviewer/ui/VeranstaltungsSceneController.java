@@ -48,6 +48,8 @@ public class VeranstaltungsSceneController implements Initializable {
     private Label kategorie;
     @FXML
     private Label datum;
+    @FXML
+    private Label saison;
 
     public void setData(Veranstaltungsdaten v) {
         setText(name, v.getName());
@@ -59,6 +61,7 @@ public class VeranstaltungsSceneController implements Initializable {
         setText(kurzname, v.getKurzName());
         setText(kategorie, v.getVeranstaltungsTyp().toString());
         setText(datum, createDatumString(v.getDatum1(), v.getDatum2(), v.getDatum3(), v.getDatum4(), v.getTage()));
+        setText(saison, v.getVeranstaltungsSaison());
     }
 
     private String createDatumString(String datum1, String datum2, String datum3, String datum4, boolean[] tage) {

@@ -54,8 +54,10 @@ public class MainWindowController implements Initializable {
     private Wettbewerbe wettbewerbe;
     private Veranstaltungsdaten veranstaltungsdaten;
     private File previousOpen;
+    private File previousOpenFile;
     private File previousOpenDirectory;
     private int selection = 1;
+    private Boolean lastItemFile;
 
     private void sectionVeranstaltungsdaten() {
         if (veranstaltungsdaten != null) {
@@ -136,36 +138,42 @@ public class MainWindowController implements Initializable {
         File file = fileChooser.showOpenDialog((Stage) content.getScene().getWindow());
         if (file != null) {
             previousOpen = file.getParentFile();
-            String name = file.getName();
-            if (name.substring(name.lastIndexOf('.') + 1).toLowerCase().equals("zip")) {
-                System.out.println("Zip-Inhalt");
-
-                try {
-                    ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
-                    ZipEntry entry;
-                    while ((entry = zip.getNextEntry()) != null) {
-                        if (entry.getSize() > -1 && entry.getSize() <= Integer.MAX_VALUE) {
-                            byte data[] = new byte[(int) entry.getSize()];
-                            String filename = entry.getName();
-                            System.out.println("* " + filename);
-
-                            readFileFromZip(filename, zip, data, (int) entry.getSize());
-                        } else {
-                            System.out.println("Fehler beim Lesen der Zip-Datei");
-                        }
-                    }
-
-                    sectionVeranstaltungsdaten();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                System.out.println("Not supported file format");
-            }
+            previousOpenFile = file;
+            openFile(file);
         } else {
             System.out.println("Auswahl abgebrochen");
+        }
+    }
+
+    private void openFile(File file) {
+        String name = file.getName();
+        if (name.substring(name.lastIndexOf('.') + 1).toLowerCase().equals("zip")) {
+            lastItemFile = true;
+            System.out.println("Zip-Inhalt");
+
+            try {
+                ZipInputStream zip = new ZipInputStream(new FileInputStream(file));
+                ZipEntry entry;
+                while ((entry = zip.getNextEntry()) != null) {
+                    if (entry.getSize() > -1 && entry.getSize() <= Integer.MAX_VALUE) {
+                        byte data[] = new byte[(int) entry.getSize()];
+                        String filename = entry.getName();
+                        System.out.println("* " + filename);
+
+                        readFileFromZip(filename, zip, data, (int) entry.getSize());
+                    } else {
+                        System.out.println("Fehler beim Lesen der Zip-Datei");
+                    }
+                }
+
+                select(selection);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("Not supported file format");
         }
     }
 
@@ -178,32 +186,26 @@ public class MainWindowController implements Initializable {
         File directory = directoryChooser.showDialog((Stage) content.getScene().getWindow());
         if (directory != null) {
             previousOpenDirectory = directory;
-            for (File file : directory.listFiles()) {
-                switch (file.getName()) {
-                    case "vandat.c01":
-                        readVeranstaltungsdaten(file);
-                        break;
-                    case "Wettbew.c01":
-                        readWettbewerbe(file);
-                        break;
-                }
-            }
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("VeranstaltungsScene.fxml"));
-                Node n = loader.load();
-                VeranstaltungsSceneController controller = loader.<VeranstaltungsSceneController>getController();
-                if (veranstaltungsdaten != null) {
-                    controller.setData(veranstaltungsdaten);
-                }
-                content.getChildren().setAll(n);
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            openDirectory(directory);
         } else {
             System.out.println("Auswahl abgebrochen");
         }
+    }
+
+    private void openDirectory(File directory) {
+        lastItemFile = false;
+        for (File file : directory.listFiles()) {
+            switch (file.getName()) {
+                case "vandat.c01":
+                    readVeranstaltungsdaten(file);
+                    break;
+                case "Wettbew.c01":
+                    readWettbewerbe(file);
+                    break;
+            }
+        }
+
+        select(selection);
     }
 
     @FXML
@@ -216,6 +218,19 @@ public class MainWindowController implements Initializable {
     @FXML
     private void handleAbout(ActionEvent event) {
         System.out.println("Über");
+    }
+
+    @FXML
+    private void handleReload(ActionEvent event) {
+        //TODO: disable menu item if nothing is loaded
+        System.out.println("Reload");
+        if (lastItemFile != null) {
+            if (lastItemFile) {
+                openFile(previousOpenFile);
+            } else {
+                openDirectory(previousOpenDirectory);
+            }
+        }
     }
 
     @Override
@@ -235,14 +250,7 @@ public class MainWindowController implements Initializable {
             int sel = ((SectionItem) sm.getSelectedItem()).getId();
             if (sel != selection) {
                 selection = sel;
-                switch (sel) {
-                    case SectionItem.VERANSTALTUNG:
-                        sectionVeranstaltungsdaten();
-                        break;
-                    case SectionItem.VORGABEN:
-                        sectionVorgaben();
-                        break;
-                }
+                select(sel);
             }
         };
         sm.selectedIndexProperty().addListener(listener);
@@ -253,6 +261,17 @@ public class MainWindowController implements Initializable {
         );
 
         directoryChooser.setTitle("COSA Veranstaltungsordner öffnen");
+    }
+
+    private void select(int sel) {
+        switch (sel) {
+            case SectionItem.VERANSTALTUNG:
+                sectionVeranstaltungsdaten();
+                break;
+            case SectionItem.VORGABEN:
+                sectionVorgaben();
+                break;
+        }
     }
 
 }

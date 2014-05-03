@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.nsvb.cosaviewer.ui;
 
 import de.nsvb.cosaviewer.Veranstaltungsdaten;
@@ -22,8 +21,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 
 /**
  * FXML Controller class
@@ -82,20 +84,33 @@ public class VorgabenSceneController implements Initializable {
     private Label bahnenFlachGerade;
     @FXML
     private Label bahnenFlachRund;
-
-    public void setData(Veranstaltungsdaten v){
-        if(runningtrackFlach == null){//TODO: Remove
-            //throw new NullPointerException("runningTrack ist null");
-            System.out.println("runningTrack ist null");
-            //runningtrack = new RunningTrack();
-            //content.getChildren().add(runningtrack);
-        }else{
-            System.out.println("runningTrack ist da");
-            runningtrackFlach.setTracks(v.getAnzahlBahnenFlachGerade(), v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachGerade(), v.getGesperrtFlachRund());
-        }
+    @FXML
+    private Label hürdenFlachGerade;
+    @FXML
+    private Label hürdenFlachRund;
+    @FXML
+    private Label aufschlagNachmeldung;
+    @FXML
+    private Label zusendungErgebnisliste;
+    @FXML
+    private GridPane flach_gerade;
+    @FXML
+    private GridPane flach_rund;
+    @FXML
+    private GridPane hürden_gerade;
+    @FXML
+    private GridPane hürden_rund;
+    @FXML
+    private CheckBox nachmeldezeitraum;
+    
+    public void setData(Veranstaltungsdaten v) {
+        runningtrackFlach.setTracks(v.getAnzahlBahnenFlachGerade(), v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachGerade(), v.getGesperrtFlachRund());
         runningtrackHürden.setTracks(v.getAnzahlBahnenHürdenGerade(), v.getAnzahlBahnenHürdenRund(), v.getGesperrtHürdenGerade(), v.getGesperrtHürdenRund());
+        
         bahnenFlachGerade.setText(v.getAnzahlBahnenFlachGerade() + "");
         bahnenFlachRund.setText(v.getAnzahlBahnenFlachRund() + "");
+        hürdenFlachGerade.setText(v.getAnzahlBahnenHürdenGerade() + "");
+        hürdenFlachRund.setText(v.getAnzahlBahnenHürdenRund() + "");
         
         erwEinzel.setText(v.getOrgGebührErwEinzel());
         erwStaffel.setText(v.getOrgGebührErwStaffel());
@@ -120,14 +135,36 @@ public class VorgabenSceneController implements Initializable {
         g4_7KampfWJU16.setText(v.getOrgGebühr4_7KampfWJU16());
         g5_10KampfMJU20U18.setText(v.getOrgGebühr5_10KampfMJU20U18());
         g4_7KampfWJU20U18.setText(v.getOrgGebühr4_7KampfWJU20U18());
+        
+        nachmeldezeitraum.setSelected(v.isBeginnNachmeldung());
+        aufschlagNachmeldung.setText(v.getAufschlagNachmeldegebühren() + ((v.isAufschlagProzent()) ? " %" : ""));
+        zusendungErgebnisliste.setText(v.getGebührZusendungErgebnisliste());
+        
+        gesperrteBahnen(flach_gerade, v.getAnzahlBahnenFlachGerade(), v.getGesperrtFlachGerade());
+        gesperrteBahnen(flach_rund, v.getAnzahlBahnenFlachRund(), v.getGesperrtFlachRund());
+        gesperrteBahnen(hürden_gerade, v.getAnzahlBahnenHürdenGerade(), v.getGesperrtHürdenGerade());
+        gesperrteBahnen(hürden_rund, v.getAnzahlBahnenHürdenRund(), v.getGesperrtHürdenRund());
     }
     
+    private void gesperrteBahnen(GridPane bahnen, int anzahlBahnen, boolean[] gesperrt) {
+        for (int i = 0; i < gesperrt.length && i < anzahlBahnen; i++) {
+            Label num = new Label((i + 1) + "");
+            bahnen.add(num, i, 0);
+            GridPane.setHalignment(num, HPos.CENTER);
+            if (gesperrt[i]) {
+                Label x = new Label("x");
+                bahnen.add(x, i, 1);
+                GridPane.setHalignment(x, HPos.CENTER);
+            }
+        }
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         content.setFitToWidth(true);
-    }    
+    }
     
 }

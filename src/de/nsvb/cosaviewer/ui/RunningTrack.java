@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package de.nsvb.cosaviewer.ui;
 
 import javafx.scene.canvas.Canvas;
@@ -27,17 +26,23 @@ import javafx.scene.shape.StrokeLineCap;
  *
  * @author ns130291
  */
-public class RunningTrack extends Canvas{
-    public RunningTrack(){
+public class RunningTrack extends Canvas {
+
+    public RunningTrack() {
         super(300, 250);
     }
-    
-    public void setTracks(int bahnenGerade, int bahnenRund, boolean[] gesperrtGerade, boolean[] gesperrtRund){
+
+    public void setTracks(int bahnenGerade, int bahnenRund, boolean[] gesperrtGerade, boolean[] gesperrtRund) {
+        //TODO: Überlagerung gesperrter Bahnen überdenken
         GraphicsContext gc = getGraphicsContext2D();
-        
+
+        Color background = Color.GREY;
+        Color track = new Color(0.54509807, 0.0, 0.0, 1);
+        Color track_transparent = new Color(0.54509807, 0.0, 0.0, 0.7);
+        Color disabled = new Color(0.2, 0.2, 0.2, 1);
+
         //TODO: gesperrte Bahnen
-        
-        gc.setFill(Color.GREY);
+        gc.setFill(background);
         gc.fillRect(0, 0, 1000, 1000);
 
         //sonst wirds hässlich mit dem Rechnen!
@@ -60,19 +65,36 @@ public class RunningTrack extends Canvas{
 
         //Bahnen
         gc.setLineWidth(laneWidth);
-        gc.setStroke(Color.DARKRED);
-        //gc.setStroke(Color.BLUE);
+        for (int i = 1; i <= bahnenRund; i++) {
+            if (gesperrtRund[i - 1]) {
+                gc.setStroke(disabled);
+            } else {
+                gc.setStroke(track);
+            }
+            //rechte Kurve
+            double a = (radius + laneWidth * i - laneWidth / 2) * 2;
+            gc.strokeArc(x - laneWidth * i - radius + laneWidth / 2, y + laneWidth / 2 + laneWidth * (10 - i), a, a, 0, 90, ArcType.OPEN);
+        }
         for (int i = 1; i <= bahnenGerade; i++) {
+            if (gesperrtGerade[i - 1]) {
+                gc.setStroke(disabled);
+            } else {
+                gc.setStroke(track);
+            }
             //obere Gerade
             double y_line = y + laneWidth / 2 + laneWidth * (10 - i);
             gc.strokeLine(x, y_line, x + length_line, y_line);
 
         }
-        //gc.setStroke(Color.DARKRED);
+        gc.setLineWidth(laneWidth);
         for (int i = 1; i <= bahnenRund; i++) {
-            //rechte Kurve
-            double a = (radius + laneWidth * i - laneWidth / 2) * 2;
-            gc.strokeArc(x - laneWidth * i - radius + laneWidth / 2, y + laneWidth / 2 + laneWidth * (10 - i), a, a, 0, 90, ArcType.OPEN);
+            if (!gesperrtRund[i - 1]) {
+                gc.setStroke(track_transparent);
+                //rechte Kurve
+                double a = (radius + laneWidth * i - laneWidth / 2) * 2;
+                gc.strokeArc(x - laneWidth * i - radius + laneWidth / 2, y + laneWidth / 2 + laneWidth * (10 - i), a, a, 0, 90, ArcType.OPEN);
+            }
+
         }
 
         //Linien
